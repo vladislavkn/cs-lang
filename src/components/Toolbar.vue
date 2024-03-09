@@ -14,9 +14,19 @@
       type="number"
       class="timeout"
     />
+    <div class="spacer" />
+    <a
+      href="https://github.com/vladislavkn/cs-lang"
+      target="_blank"
+      class="github"
+    >
+      <GithubOutlined :style="{ fontSize: '24px' }" /> Check out on GitHub
+    </a>
   </a-flex>
 </template>
+
 <script setup lang="ts">
+import GithubOutlined from "@ant-design/icons-vue/GithubOutlined";
 const emit = defineEmits(["run", "reset", "runStep", "stop", "share"]);
 
 const timeout = defineModel("timeout");
@@ -24,10 +34,21 @@ const timeout = defineModel("timeout");
 
 <style scoped>
 .toolbar {
-  padding: 4px 8px;
+  padding: 0.5rem 1rem;
+  border-bottom: 1px solid lightgray;
 }
 
 .timeout {
   max-width: 200px;
+}
+
+.spacer {
+  flex: 1 0 auto;
+}
+
+.github {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 </style>

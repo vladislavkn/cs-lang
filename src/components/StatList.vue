@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <a-flex vertical :gap="8" class="statList">
+  <div class="statList">
+    <a-flex vertical :gap="8" class="stats">
       <StatItem label="Line number" :value="props.state.lineIndex + 1" />
       <StatItem label="Status" :value="props.state.status" />
       <StatItem label="Error" :value="props.state.errorMessage" />
@@ -18,9 +18,13 @@ const props = defineProps<{ state: InterpreterState }>();
 </script>
 
 <style>
-.statList {
+.stats {
   width: 320px;
-  padding: 0 0.5rem;
+  padding: 0.5rem 1rem 0.25rem 0.25rem;
   margin-bottom: 1rem;
+}
+
+.statList {
+  border-left: 1px solid lightgray;
 }
 </style>

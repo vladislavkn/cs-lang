@@ -7,7 +7,7 @@
     @share="shareCode"
     v-model:timeout="runTimeout"
   />
-  <a-flex :gap="8">
+  <a-flex :gap="8" class="container">
     <CodeTextarea v-model="code" :line-index="state.lineIndex" />
     <StatList :state="state" />
   </a-flex>
@@ -27,5 +27,9 @@ const { run, reset, stop, runStep, state, runTimeout } = useInterpreter(code);
 <style>
 body {
   margin: 0;
+}
+
+.container {
+  border-bottom: 1px solid lightgray;
 }
 </style>
