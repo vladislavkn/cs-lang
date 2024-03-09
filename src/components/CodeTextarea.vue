@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Ref, ref, toRef, watch } from "vue";
+import { ref, toRef, watch } from "vue";
 import { Codemirror } from "vue-codemirror";
 import { EditorView, Decoration } from "@codemirror/view";
 import { StateField, StateEffect } from "@codemirror/state";
