@@ -1,18 +1,60 @@
-# Vue 3 + TypeScript + Vite
+# CS-Lang
 
-This template should help get you started developing with Vue 3 and TypeScript in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+Simple online interpreter for _Goto_ langiuage. Feel free to open issues or make forks/PR.
 
-## Recommended IDE Setup
+## Spec
 
-- [VS Code](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+### Variable definition
 
-## Type Support For `.vue` Imports in TS
+- Variable's name must startr with at least one letter. It can include only letters and numbers.
+- Variable's value must be a number greater or equal zero.
 
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin) to make the TypeScript language service aware of `.vue` types.
+```
+x = 1
+```
 
-If the standalone TypeScript plugin doesn't feel fast enough to you, Volar has also implemented a [Take Over Mode](https://github.com/johnsoncodehk/volar/discussions/471#discussioncomment-1361669) that is more performant. You can enable it by the following steps:
+### Addition/substraction
 
-1. Disable the built-in TypeScript Extension
-   1. Run `Extensions: Show Built-in Extensions` from VSCode's command palette
-   2. Find `TypeScript and JavaScript Language Features`, right click and select `Disable (Workspace)`
-2. Reload the VSCode window by running `Developer: Reload Window` from the command palette.
+- Only one can be substracted or added to a variable
+- If variable equals to zero, expression `variable - 1` will still return 0 (rule of the Goto language)
+
+```
+x = x + 1
+x = x - 1
+```
+
+### Unconditional goto
+
+- If line number is lower than 1, it will be interpreted as 1
+- If line number is greater than number of lines, it will be interpreted as the maximum line number.
+
+```
+goto 42
+```
+
+### Confitional goto
+
+- Rules of the unconditional goto are applied
+- Condition can only check that variable is equal to zero
+
+```
+goto 42 if x = 0
+```
+
+### Halt
+
+- Programs stops once `halt` is encountered.
+
+```
+halt
+```
+
+### Comments
+
+- Comments starts with `#`
+
+```
+# What is the answer of life, the universe and everything?
+```
+
+_Enjoy!_
