@@ -13,7 +13,7 @@ const setEditorView = (payload: { view: EditorView }) => {
 };
 
 const lineHighlightMark = Decoration.line({
-  attributes: { style: "background-color: lightblue" },
+  attributes: { style: "background-color: rgba(0, 150, 255, 0.2)" },
 });
 
 const addLineHighlight = StateEffect.define<number>();
@@ -60,9 +60,3 @@ watch([lineIndex, editorView], highlightLine, { immediate: true });
     @ready="setEditorView"
   />
 </template>
-
-<style>
-.highlight {
-  background-color: red;
-}
-</style>
