@@ -1,5 +1,7 @@
 # CS-Lang
 
+Check it online: [cs-lang.vercel.app](cs-lang.vercel.app)
+
 Simple online interpreter for _Goto_ langiuage. Feel free to open issues or make forks/PR.
 
 ## Spec
