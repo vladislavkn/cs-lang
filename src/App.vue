@@ -7,7 +7,7 @@
     @share="shareCode"
     v-model:timeout="runTimeout"
   />
-  <a-flex :gap="8" class="container">
+  <a-flex class="container">
     <CodeTextarea v-model="code" :line-index="state.lineIndex" />
     <StatList :state="state" />
   </a-flex>

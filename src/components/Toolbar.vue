@@ -36,6 +36,7 @@ const timeout = defineModel("timeout");
 .toolbar {
   padding: 0.5rem 1rem;
   border-bottom: 1px solid lightgray;
+  flex-wrap: wrap;
 }
 
 .timeout {
