@@ -73,7 +73,7 @@ export class Interpreter {
     if (this.onStateUpdated) this.onStateUpdated(this.state);
   }
 
-  runStep() {
+  public runStep() {
     this.checkStatus(
       InterpreterStatus.LOADED,
       InterpreterStatus.RUNNING,
@@ -90,7 +90,9 @@ export class Interpreter {
   private checkStatus(...statuses: InterpreterStatus[]) {
     if (!this.hasStatus(...statuses)) {
       throw Error(
-        `The interpreter is not in the expected state\ncurrent: ${this.state.status}, expected: ${statuses}`
+        "The interpreter is not in the expected state\n" +
+          `Current state: ${this.state.status}\n` +
+          `Expected state: ${statuses}`
       );
     }
   }
@@ -189,12 +191,11 @@ export class Interpreter {
   public async run() {
     this.checkStatus(
       InterpreterStatus.LOADED,
-      InterpreterStatus.RUNNING,
       InterpreterStatus.STEP_EXECUTION
     );
     this.setState({ status: InterpreterStatus.RUNNING });
 
-    while (this.state.lineIndex < this.ast.length) {
+    while (this.state.lineIndex < this.ast.length - 1) {
       if (this.runTimeout > 0) {
         await new Promise((r) => setTimeout(r, this.runTimeout));
       }

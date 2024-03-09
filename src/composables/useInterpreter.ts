@@ -23,10 +23,10 @@ const useInterpreter = (code: Ref<string>) => {
   const run = () => invokeInterpreterRunMethod(() => interpreter.run());
   const runStep = () => invokeInterpreterRunMethod(() => interpreter.runStep());
 
-  const invokeInterpreterRunMethod = (fn: () => void) => {
+  const invokeInterpreterRunMethod = async (fn: () => void) => {
     loadCodeIfNeeded();
     try {
-      fn();
+      await fn();
     } catch (e) {
       console.error(e);
       alert("Interpreter error: " + (e as Error).message);
