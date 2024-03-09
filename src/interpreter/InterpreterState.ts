@@ -14,6 +14,14 @@ export default class InterpreterState {
       values.heap = { ...newValues.heap };
     }
 
+    const errorStatuses = [
+      InterpreterStatus.PARSING_ERROR,
+      InterpreterStatus.RUNTIME_ERROR,
+    ];
+    if (!errorStatuses.includes(values.status)) {
+      values.errorMessage = undefined;
+    }
+
     return new InterpreterState(
       values.lineIndex,
       values.heap,

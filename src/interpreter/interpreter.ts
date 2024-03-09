@@ -89,7 +89,9 @@ export class Interpreter {
 
   private checkStatus(...statuses: InterpreterStatus[]) {
     if (!this.hasStatus(...statuses)) {
-      throw Error("The interpreter is not in the expected state");
+      throw Error(
+        `The interpreter is not in the expected state\ncurrent: ${this.state.status}, expected: ${statuses}`
+      );
     }
   }
 
