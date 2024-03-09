@@ -9,11 +9,19 @@
     <a-button @click="emit('stop')">Stop</a-button>
     <a-button @click="emit('share')">Share</a-button>
     <a-input
+      label="Timeout"
       v-model:value="timeout"
-      placeholder="Exectution timeout in ms"
       type="number"
       class="timeout"
-    />
+    >
+      <template #prefix
+        ><a-typography-text type="secondary"
+          >Step timeout:</a-typography-text
+        ></template
+      ><template #suffix
+        ><a-typography-text type="secondary">ms</a-typography-text></template
+      ></a-input
+    >
     <div class="spacer" />
     <a
       href="https://github.com/vladislavkn/cs-lang"
@@ -40,7 +48,7 @@ const timeout = defineModel("timeout");
 }
 
 .timeout {
-  max-width: 200px;
+  width: 12.5rem;
 }
 
 .spacer {
