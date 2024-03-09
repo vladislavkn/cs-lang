@@ -1,4 +1,4 @@
-import { Ref, computed, ref, shallowRef, watch } from "vue";
+import { Ref, ref, shallowRef, watch } from "vue";
 import { Interpreter } from "../interpreter/interpreter";
 import InterpreterState, {
   InterpreterStatus,
@@ -9,11 +9,7 @@ const useInterpreter = (code: Ref<string>) => {
   const state = shallowRef<InterpreterState>(new InterpreterState());
 
   watch(code, () => {
-    const runningOrStepExecution = [
-      InterpreterStatus.RUNNING,
-      InterpreterStatus.STEP_EXECUTION,
-    ];
-    if (runningOrStepExecution.includes(state.value.status)) {
+    if (!interpreter.hasStatus(InterpreterStatus.NOT_LOADED)) {
       interpreter.reset();
     }
   });
@@ -22,40 +18,31 @@ const useInterpreter = (code: Ref<string>) => {
     state.value = newState;
   });
 
-  const run = () => {
-    loadCodeIfStatus(
-      InterpreterStatus.NOT_LOADED,
-      InterpreterStatus.PARSING_ERROR,
-      InterpreterStatus.RUNTIME_ERROR
-    );
+  const reset = () => interpreter.reset();
+  const stop = () => interpreter.stop();
+  const run = () => invokeInterpreterRunMethod(() => interpreter.run());
+  const runStep = () => invokeInterpreterRunMethod(() => interpreter.runStep());
+
+  const invokeInterpreterRunMethod = (fn: () => void) => {
+    loadCodeIfNeeded();
     try {
-      interpreter.run();
+      fn();
     } catch (e) {
       console.error(e);
+      alert("Interpreter error: " + (e as Error).message);
     }
   };
 
-  const runStep = () => {
-    loadCodeIfStatus(
-      InterpreterStatus.NOT_LOADED,
+  const loadCodeIfNeeded = () => {
+    const needLoad = interpreter.hasStatus(
       InterpreterStatus.PARSING_ERROR,
-      InterpreterStatus.RUNTIME_ERROR
+      InterpreterStatus.RUNTIME_ERROR,
+      InterpreterStatus.NOT_LOADED
     );
-    try {
-      interpreter.evalStep();
-    } catch (e) {
-      console.error(e);
-    }
-  };
-
-  const loadCodeIfStatus = (...statuses: InterpreterStatus[]) => {
-    if (statuses.includes(state.value.status)) {
+    if (needLoad) {
       interpreter.load(code.value);
     }
   };
-
-  const reset = () => interpreter.reset();
-  const stop = () => interpreter.stop();
 
   const runTimeout = ref(interpreter.getRunTimeout());
 

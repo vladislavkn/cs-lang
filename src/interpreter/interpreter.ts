@@ -73,7 +73,7 @@ export class Interpreter {
     if (this.onStateUpdated) this.onStateUpdated(this.state);
   }
 
-  evalStep() {
+  runStep() {
     this.checkStatus(
       InterpreterStatus.LOADED,
       InterpreterStatus.RUNNING,
@@ -84,16 +84,20 @@ export class Interpreter {
     }
 
     this.setState({ status: InterpreterStatus.STEP_EXECUTION });
-    this.evalStepInternal();
+    this.runStepInternal();
   }
 
   private checkStatus(...statuses: InterpreterStatus[]) {
-    if (!statuses.includes(this.state.status)) {
+    if (!this.hasStatus(...statuses)) {
       throw Error("The interpreter is not in the expected state");
     }
   }
 
-  private evalStepInternal() {
+  public hasStatus(...statuses: InterpreterStatus[]) {
+    return statuses.includes(this.state.status);
+  }
+
+  private runStepInternal() {
     try {
       const node = this.ast[this.state.lineIndex];
       this.evalNode(node);
@@ -194,7 +198,7 @@ export class Interpreter {
       }
       if (this.state.status !== InterpreterStatus.RUNNING) break;
 
-      this.evalStepInternal();
+      this.runStepInternal();
     }
 
     if (this.state.status === InterpreterStatus.RUNNING) {
@@ -203,7 +207,11 @@ export class Interpreter {
   }
 
   reset() {
-    this.setState({ lineIndex: 0, heap: {}, status: InterpreterStatus.LOADED });
+    this.setState({
+      lineIndex: 0,
+      heap: {},
+      status: InterpreterStatus.NOT_LOADED,
+    });
   }
 
   stop() {
